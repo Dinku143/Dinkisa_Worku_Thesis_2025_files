@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'kafka'
+    static_configs:
+      - targets: ['localhost:9308']
+
+  - job_name: 'flink'
+    static_configs:
+      - targets: ['localhost:8081']
+
+  - job_name: 'mongodb'
+    static_configs:
+      - targets: ['localhost:9216']
+
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['localhost:9187']
