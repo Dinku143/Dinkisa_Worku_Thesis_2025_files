@@ -1,0 +1,241 @@
+{
+  "id": 1,
+  "type": "barchart",
+  "title": "Throughput comparison between NoSQL (MongoDB inserts/sec) and SQL (PostgreSQL commits/sec)",
+  "gridPos": {
+    "x": 0,
+    "y": 0,
+    "h": 8,
+    "w": 12
+  },
+  "fieldConfig": {
+    "defaults": {
+      "custom": {
+        "lineWidth": 7,
+        "fillOpacity": 80,
+        "gradientMode": "none",
+        "axisPlacement": "auto",
+        "axisLabel": "number of operations per second",
+        "axisColorMode": "text",
+        "axisBorderShow": true,
+        "scaleDistribution": {
+          "type": "linear"
+        },
+        "axisCenteredZero": false,
+        "hideFrom": {
+          "tooltip": false,
+          "viz": false,
+          "legend": false
+        },
+        "thresholdsStyle": {
+          "mode": "off"
+        }
+      },
+      "color": {
+        "mode": "palette-classic"
+      },
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          },
+          {
+            "color": "red",
+            "value": 80
+          }
+        ]
+      }
+    },
+    "overrides": []
+  },
+  "pluginVersion": "12.1.1",
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cevojil348lq8c"
+      },
+      "editorMode": "code",
+      "exemplar": false,
+      "expr": "rate(mongodb_collstats_latencyStats_writes_ops{job=\"mongodb\", database=\"fraud_detection\", collection=\"processed_transactions\"}[1m])\r\n",
+      "instant": false,
+      "legendFormat": "MongoDB Inserts/sec",
+      "range": true,
+      "refId": "A"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cevojil348lq8c"
+      },
+      "editorMode": "code",
+      "expr": "rate(pg_stat_database_xact_commit{job=\"postgres\", datname=\"fraud_detection\"}[1m])\r\n",
+      "instant": false,
+      "key": "Q-6e5e118a-d8c5-48d9-93ff-3780d7861376-1",
+      "legendFormat": "PostgreSQL Commits/sec",
+      "range": true,
+      "refId": "B"
+    }
+  ],
+  "datasource": {
+    "type": "prometheus",
+    "uid": "cevojil348lq8c"
+  },
+  "options": {
+    "orientation": "auto",
+    "xTickLabelRotation": -45,
+    "xTickLabelSpacing": 0,
+    "showValue": "auto",
+    "stacking": "none",
+    "groupWidth": 0.84,
+    "barWidth": 0.97,
+    "barRadius": 0.3,
+    "fullHighlight": false,
+    "tooltip": {
+      "mode": "single",
+      "sort": "none",
+      "hideZeros": false
+    },
+    "legend": {
+      "showLegend": true,
+      "displayMode": "list",
+      "placement": "bottom",
+      "calcs": []
+    }
+  }
+}
+
+
+
+
+
+
+
+
+Added Grafana dashboard JSON (MongoDB vs PostgreSQL throughput comparison)
+
+
+
+
+
+
+
+
+
+{
+  "id": 1,
+  "type": "barchart",
+  "title": "Latency comparison between MongoDB and PostgreSQL",
+  "gridPos": {
+    "x": 0,
+    "y": 0,
+    "h": 8,
+    "w": 12
+  },
+  "fieldConfig": {
+    "defaults": {
+      "custom": {
+        "lineWidth": 8,
+        "fillOpacity": 88,
+        "gradientMode": "none",
+        "axisPlacement": "auto",
+        "axisLabel": "",
+        "axisColorMode": "text",
+        "axisBorderShow": false,
+        "scaleDistribution": {
+          "type": "linear"
+        },
+        "axisCenteredZero": false,
+        "hideFrom": {
+          "tooltip": false,
+          "viz": false,
+          "legend": false
+        },
+        "thresholdsStyle": {
+          "mode": "off"
+        }
+      },
+      "color": {
+        "mode": "palette-classic"
+      },
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          },
+          {
+            "color": "red",
+            "value": 80
+          }
+        ]
+      }
+    },
+    "overrides": []
+  },
+  "pluginVersion": "12.1.1",
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cevojil348lq8c"
+      },
+      "editorMode": "code",
+      "exemplar": false,
+      "expr": "(rate(mongodb_collstats_latencyStats_writes_latency{database=\"fraud_detection\",collection=\"processed_transactions\"}[1m])\r\n /\r\n rate(mongodb_collstats_latencyStats_writes_ops{database=\"fraud_detection\",collection=\"processed_transactions\"}[1m])\r\n) / 1000\r\n\r\n",
+      "instant": false,
+      "key": "Q-9b57d5e6-d8b9-4a24-b9c5-83c13e28719d-1",
+      "legendFormat": "MongoDB Write Latency (s)",
+      "range": true,
+      "refId": "A"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cevojil348lq8c"
+      },
+      "editorMode": "code",
+      "expr": "pg_stat_statements_mean_time_seconds{datname=\"fraud_detection\"} * 1000\r\n",
+      "instant": false,
+      "key": "Q-2fd9ecd9-d959-418b-a8b0-90ab018cdd81-1",
+      "legendFormat": "PostgreSQL Avg Exec Latency (s)",
+      "range": true,
+      "refId": "B"
+    }
+  ],
+  "datasource": {
+    "type": "prometheus",
+    "uid": "cevojil348lq8c"
+  },
+  "options": {
+    "orientation": "auto",
+    "xTickLabelRotation": -45,
+    "xTickLabelSpacing": 0,
+    "showValue": "auto",
+    "stacking": "none",
+    "groupWidth": 0.7,
+    "barWidth": 0.97,
+    "barRadius": 0.45,
+    "fullHighlight": false,
+    "tooltip": {
+      "mode": "single",
+      "sort": "none",
+      "hideZeros": false
+    },
+    "legend": {
+      "showLegend": true,
+      "displayMode": "list",
+      "placement": "bottom",
+      "calcs": []
+    }
+  }
+}
+
+
+
+Added Grafana dashboard JSON (MongoDB vs PostgreSQL Latency comparison)
