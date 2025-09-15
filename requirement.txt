@@ -1,0 +1,24 @@
+apache-flink-libraries==1.17.2
+apache-flink==1.17.2
+kafka-python==2.0.2
+matplotlib==3.9.2
+numpy==1.26.4
+pandas==2.2.2
+psycopg2-binary==2.9.9
+pymongo==4.6.1
+scikit-learn==1.5.1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Added clean requirements.txt with essential dependencies
